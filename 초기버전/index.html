@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Style Fit | 당신만의 스타일을 찾다</title>
+    <meta name="description" content="AB 매칭 테스트와 코사인 유사도를 통해 완벽한 스타일 핏을 찾아주는 패션 큐레이션 앱">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,300;400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="light-theme">
+    <header class="header">
+        <div class="container">
+            <h1 class="logo">Style <span>Fit</span></h1>
+            <nav class="nav">
+                <ul>
+                    <li><a href="#test" id="nav-style-test" class="active">Style Test</a></li>
+                    <li><a href="#recommendations">Recommendations</a></li>
+                    <li><a href="#explorer">Explorer</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main id="app-root">
+        <!-- Hero Section / Intro -->
+        <section id="hero" class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <br></br>
+ 
+                    <h2 class="hero-title">Find Your Perfect <br><span class="highlight">Fashion DNA</span></h2>
+                    <p class="hero-subtitle">AB 매칭 테스트를 통해 당신의 취향을 분석하고, <br>코사인 유사도 알고리즘으로 딱 맞는 의류를 추천해 드립니다.</p>
+                    <button id="start-test-btn" class="btn-primary">시작하기</button>
+                </div>
+                <div class="hero-visual">
+                    <!-- Placeholder for dynamic visual/animation -->
+                    <div class="style-cards-stack">
+                        <div class="card card-1"></div>
+                        <div class="card card-2"></div>
+         s               <div class="card card-3"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- AB Test Section (Hidden Initially) -->
+        <section id="test-section" class="section hidden">
+            <div class="container">
+                <div class="section-header">
+                    <span class="step-indicator">Step 01</span>
+                    <h2 class="section-title">AB Matching Test</h2>
+                    <p class="section-desc">둘 중 더 마음에 드는 스타일을 선택해 주세요.</p>
+                    <button class="btn-skip" id="test-skip-btn">건너뛰기</button>
+                </div>
+                <div class="test-container">
+                    <div id="ab-test-container" class="ab-test-container">
+                        <div id="option-a" class="ab-card pulsate">
+                            <div class="image-container"></div>
+                            <div class="label">Option A</div>
+                        </div>
+                        <div id="option-b" class="ab-card pulsate">
+                            <div class="image-container"></div>
+                            <div class="label">Option B</div>
+                        </div>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div id="progress" class="progress-bar"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results / Recommendations Section (Hidden Initially) -->
+        <section id="recommendations-section" class="section hidden">
+            <div class="container">
+                <div class="section-header">
+                    <span class="step-indicator">Step 02</span>
+                    <h2 class="section-title">Your Style Profile</h2>
+                    <p class="section-desc">당신의 취향 벡터를 분석한 결과입니다.</p>
+                </div>
+                <div class="results-grid">
+                    <div class="profile-chart">
+                        <!-- Canvas or SVG for preference visualization -->
+                        <div id="radar-chart-placeholder"></div>
+                    </div>
+                    <div id="recommendation-list" class="product-grid">
+                        <!-- Products will be injected here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Style Fit. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <a href="../index.html" class="version-label">최신버전 바로가기</a>
+    <script src="app.js"></script>
+</body>
+</html>
