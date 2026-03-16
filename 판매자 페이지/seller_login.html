@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Style Fit - 판매자 인증</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="header__container">
+            <h1 class="header__logo">Style Fit <span>Seller</span></h1>
+            <nav class="header__nav">
+                <a href="../index.html" class="header__link">Home</a>
+                <a href="../index.html#test" class="header__link">Style Test</a>
+                <a href="../index.html#recommendations" class="header__link">Recommendations</a>
+                <a href="../index.html#explorer" class="header__link">Explorer</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="login-container">
+        <div class="login-card">
+            <div class="login-card__content">
+                <p class="login-card__step">SELLER AUTHENTICATION</p>
+                <h2 class="login-card__title">판매자 포털</h2>
+                <p class="login-card__subtitle">상품 관리 및 판매 분석을 위해 인증해 주세요.</p>
+                
+                <form id="sellerLoginForm" class="login-form">
+                    <div class="login-form__group">
+                        <label for="seller-id" class="login-form__label">판매자 ID</label>
+                        <input type="text" id="seller-id" name="seller-id" class="login-form__input" placeholder="판매자 계정을 입력하세요" required>
+                    </div>
+                    <div class="login-form__group">
+                        <label for="seller-password" class="login-form__label">비밀번호</label>
+                        <input type="password" id="seller-password" name="seller-password" class="login-form__input" placeholder="비밀번호를 입력하세요" required>
+                    </div>
+                    <div class="login-form__options">
+                        <label class="login-form__remember">
+                            <input type="checkbox" name="remember"> 세션 유지
+                        </label>
+                        <a href="#" class="login-form__forgot">계정 정보를 잊으셨나요?</a>
+                    </div>
+                    <button type="submit" class="login-form__button">로그인 및 인증</button>
+                </form>
+
+                <div class="login-card__info">
+                    <p>워크스페이스 보안을 위해 2단계 인증이 필요할 수 있습니다.</p>
+                </div>
+
+                <p class="login-card__signup">신규 판매자이신가요? <a href="../로그인 페이지/signup.html">입점 문의하기</a></p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 Style Fit Seller Portal. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

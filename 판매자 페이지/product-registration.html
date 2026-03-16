@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Style Fit Seller - Product Registration</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        .registration-content {
+            padding: 4rem 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .registration-card {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+        .form-control {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 1rem;
+            padding: 1rem;
+            background: #f8fafc;
+            border-radius: 8px;
+        }
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .upload-zone {
+            width: 100%;
+            height: 200px;
+            border: 2px dashed #ddd;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: #f8fafc;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            position: relative;
+        }
+        .upload-zone:hover, .upload-zone.dragover {
+            border-color: var(--accent-color);
+            background: #f0f4f8;
+        }
+        .upload-zone i {
+            font-size: 2rem;
+            color: #94a3b8;
+            margin-bottom: 0.5rem;
+        }
+        .upload-zone p {
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+        #image-preview {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: white;
+        }
+        .vector-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        .btn-submit {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 2rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(62, 39, 35, 0.1);
+        }
+        .btn-submit:hover {
+            opacity: 0.9;
+        }
+        .section-subtitle {
+            margin-bottom: 2rem;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+        .sku-color-row {
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .sku-color-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            text-transform: capitalize;
+        }
+        .sku-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+        }
+        .sku-item {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .sku-item label {
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 0 !important;
+        }
+        .sku-item input {
+            padding: 0.4rem;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header__container">
+            <h1 class="header__logo">Style Fit <span>Seller</span></h1>
+            <nav class="header__nav">
+                <a href="dashboard.html" class="header__link">Dashboard</a>
+                <a href="../index.html" class="header__link">Logout</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="registration-content">
+        <div class="registration-card">
+            <h1 class="login-card__title">Register New Product</h1>
+            <p class="section-subtitle">상품 정보를 입력하여 새로운 스타일을 등록하세요.</p>
+            
+            <form id="product-form">
+                <div class="form-group">
+                    <label>Product Name</label>
+                    <input type="text" class="form-control" placeholder="e.g., Silk Floral Dress" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Brand</label>
+                    <input type="text" class="form-control" placeholder="e.g., StyleFit Premium" required>
+                </div>
+
+                <div class="two-col" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label>Price (₩)</label>
+                        <input type="text" class="form-control" placeholder="e.g., 85,000" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select class="form-control" id="category-select">
+                            <option value="top">Top</option>
+                            <option value="bottom">Bottom</option>
+                            <option value="outer">Outer</option>
+                            <option value="dress">Dress</option>
+                            <option value="shoe">Shoe</option>
+                            <option value="other">Other</option>
+                            <option value="custom">-- New Category --</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group" id="custom-category-group" style="display: none;">
+                    <label>Custom Category Name</label>
+                    <input type="text" id="custom-category-input" class="form-control" placeholder="e.g., Accessory, Hat, etc.">
+                </div>
+
+                <div class="form-group">
+                    <label>Product Image</label>
+                    <div class="upload-zone" id="upload-zone">
+                        <img id="image-preview" src="" alt="Preview" onerror="this.src='../images/placeholder.png'; this.style.opacity='0.5';">
+                        <div id="upload-placeholder">
+                            <span style="font-size: 2rem; display: block; margin-bottom: 0.5rem;">📸</span>
+                            <p>클릭하거나 파일을 여기로 끌어다 놓으세요</p>
+                            <p style="font-size: 0.8rem; margin-top: 0.3rem;">(JPG, PNG, GIF 지원)</p>
+                        </div>
+                        <input type="file" id="file-input" style="display: none;" accept="image/*">
+                    </div>
+                    <div class="form-group">
+                        <label>Or Image URL</label>
+                        <input type="text" id="url-input" class="form-control" placeholder="https://images.unsplash.com/...">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Available Colors</label>
+                    <div class="checkbox-group color-checkbox-group">
+                        <label class="checkbox-item"><input type="checkbox" value="white"> White</label>
+                        <label class="checkbox-item"><input type="checkbox" value="black"> Black</label>
+                        <label class="checkbox-item"><input type="checkbox" value="navy"> Navy</label>
+                        <label class="checkbox-item"><input type="checkbox" value="blue"> Blue</label>
+                        <label class="checkbox-item"><input type="checkbox" value="beige"> Beige</label>
+                        <label class="checkbox-item"><input type="checkbox" value="grey"> Grey</label>
+                        <label class="checkbox-item"><input type="checkbox" value="khaki"> Khaki</label>
+                        <label class="checkbox-item"><input type="checkbox" value="brown"> Brown</label>
+                        <label class="checkbox-item"><input type="checkbox" value="red"> Red</label>
+                        <label class="checkbox-item"><input type="checkbox" value="orange"> Orange</label>
+                        <label class="checkbox-item"><input type="checkbox" value="yellow"> Yellow</label>
+                        <label class="checkbox-item"><input type="checkbox" value="green"> Green</label>
+                        <label class="checkbox-item"><input type="checkbox" value="pink"> Pink</label>
+                        <label class="checkbox-item"><input type="checkbox" value="pattern"> Pattern</label>
+                    </div>
+                </div>
+
+                <div class="form-group" id="sku-inventory-group" style="display: none;">
+                    <label>Stock Management (per Color & Size)</label>
+                    <div id="sku-variants-container">
+                        <!-- Dynamic color grids will be injected here -->
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Product Description</label>
+                    <textarea id="description-input" class="form-control" rows="4" placeholder="상품에 대한 상세 설명을 입력하세요..."></textarea>
+                </div>
+
+                <hr style="margin: 2rem 0; border: 0; border-top: 1px solid #eee;">
+                
+                <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Style Vectors (0.0 to 1.0)</h3>
+                <div class="vector-grid">
+                    <div class="form-group">
+                        <label>Minimalist</label>
+                        <input type="number" step="0.1" min="0" max="1" class="form-control" value="0.5">
+                    </div>
+                    <div class="form-group">
+                        <label>Streetwear</label>
+                        <input type="number" step="0.1" min="0" max="1" class="form-control" value="0.1">
+                    </div>
+                    <div class="form-group">
+                        <label>Formal</label>
+                        <input type="number" step="0.1" min="0" max="1" class="form-control" value="0.1">
+                    </div>
+                    <div class="form-group">
+                        <label>Vintage</label>
+                        <input type="number" step="0.1" min="0" max="1" class="form-control" value="0.1">
+                    </div>
+                    <div class="form-group">
+                        <label>Traditional</label>
+                        <input type="number" step="0.1" min="0" max="1" class="form-control" value="0.0">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit">Register Product</button>
+            </form>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 Style Fit Seller Portal. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const uploadZone = document.getElementById('upload-zone');
+        const fileInput = document.getElementById('file-input');
+        const imagePreview = document.getElementById('image-preview');
+        const uploadPlaceholder = document.getElementById('upload-placeholder');
+        const urlInput = document.getElementById('url-input');
+        const categorySelect = document.getElementById('category-select');
+        const customCategoryGroup = document.getElementById('custom-category-group');
+        const form = document.getElementById('product-form');
+        const formTitle = document.querySelector('.login-card__title');
+        const submitBtn = document.querySelector('.btn-submit');
+
+        // URL Parameters for Edit Mode
+        const urlParams = new URLSearchParams(window.location.search);
+        const editId = urlParams.get('edit');
+        let isEditMode = false;
+        let editingProduct = null;
+
+        if (editId) {
+            const registeredProducts = JSON.parse(localStorage.getItem('registeredProducts') || '[]');
+            editingProduct = registeredProducts.find(p => p.id == editId);
+            if (editingProduct) {
+                isEditMode = true;
+                formTitle.textContent = "Edit Product";
+                submitBtn.textContent = "Update Product";
+                populateForm(editingProduct);
+            }
+        }
+
+        function populateForm(product) {
+            document.querySelector('.form-control[placeholder="e.g., Silk Floral Dress"]').value = product.name;
+            document.querySelector('.form-control[placeholder="e.g., StyleFit Premium"]').value = product.brand;
+            document.querySelector('.form-control[placeholder="e.g., 85,000"]').value = product.price;
+            
+            // Category
+            const standardCategories = ['top', 'bottom', 'outer', 'dress', 'shoe', 'other'];
+            if (standardCategories.includes(product.category)) {
+                categorySelect.value = product.category;
+            } else {
+                categorySelect.value = 'custom';
+                customCategoryGroup.style.display = 'block';
+                document.getElementById('custom-category-input').value = product.category;
+            }
+
+            // Colors
+            const colorCheckboxes = document.querySelectorAll('.color-checkbox-group input');
+            colorCheckboxes.forEach(cb => cb.checked = false);
+            if (product.colors && Array.isArray(product.colors)) {
+                product.colors.forEach(color => {
+                    const cb = document.querySelector(`.color-checkbox-group input[value="${color}"]`);
+                    if (cb) cb.checked = true;
+                });
+            }
+            
+            // Trigger dynamic grid generation
+            updateSkuManagement();
+
+            // Fill Inventory
+            if (product.inventory) {
+                for (const [color, sizes] of Object.entries(product.inventory)) {
+                    for (const [size, qty] of Object.entries(sizes)) {
+                        const input = document.querySelector(`.sku-stock-input[data-color="${color}"][data-size="${size}"]`);
+                        if (input) input.value = qty;
+                    }
+                }
+            }
+
+            // Description
+            document.getElementById('description-input').value = product.description || '';
+
+            // Image Persistence and Preview
+            if (product.image) {
+                let previewSrc = product.image;
+                // Handle relative paths for subfolder preview
+                if (!previewSrc.startsWith('http') && !previewSrc.startsWith('data:') && !previewSrc.startsWith('../')) {
+                    previewSrc = '../' + previewSrc;
+                }
+                imagePreview.src = previewSrc;
+                imagePreview.style.display = 'block';
+                uploadPlaceholder.style.display = 'none';
+                
+                // If it was a URL, set the URL input too
+                if (!product.image.startsWith('data:')) {
+                    urlInput.value = product.image;
+                }
+            }
+
+            // Vectors
+            const vectorInputs = document.querySelectorAll('.vector-grid input');
+            vectorInputs[0].value = product.vector[0];
+            vectorInputs[1].value = product.vector[1];
+            vectorInputs[2].value = product.vector[2];
+            vectorInputs[3].value = product.vector[3];
+            vectorInputs[4].value = product.vector[4];
+        }
+
+        function createSkuGrid(color) {
+            const div = document.createElement('div');
+            div.className = 'sku-color-row';
+            div.dataset.color = color;
+            const dotColor = color === 'pattern' || color === 'white' ? '#eee' : color;
+            div.innerHTML = `
+                <div class="sku-color-header">
+                    <div style="width: 14px; height: 14px; border-radius: 50%; background: ${dotColor}; border: 1px solid #ddd;"></div>
+                    ${color}
+                </div>
+                <div class="sku-grid">
+                    ${['S', 'M', 'L', 'XL', 'FREE'].map(size => `
+                        <div class="sku-item">
+                            <label>${size}</label>
+                            <input type="number" class="form-control sku-stock-input" data-color="${color}" data-size="${size}" placeholder="0" min="0">
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            return div;
+        }
+
+        function updateSkuManagement() {
+            const selectedColors = Array.from(document.querySelectorAll('.color-checkbox-group input:checked')).map(cb => cb.value);
+            const container = document.getElementById('sku-variants-container');
+            const group = document.getElementById('sku-inventory-group');
+            
+            if (selectedColors.length > 0) {
+                group.style.display = 'block';
+            } else {
+                group.style.display = 'none';
+            }
+
+            // Remove grids for unchecked colors
+            Array.from(container.children).forEach(child => {
+                if (!selectedColors.includes(child.dataset.color)) {
+                    child.remove();
+                }
+            });
+
+            // Add grids for new checked colors
+            selectedColors.forEach(color => {
+                if (!container.querySelector(`[data-color="${color}"]`)) {
+                    container.appendChild(createSkuGrid(color));
+                }
+            });
+        }
+
+        // Listen for color changes
+        document.querySelectorAll('.color-checkbox-group input').forEach(cb => {
+            cb.addEventListener('change', updateSkuManagement);
+        });
+
+        uploadZone.addEventListener('click', () => fileInput.click());
+        // ... (previous Drag & Drop code remains relevant)
+        uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('dragover'); });
+        uploadZone.addEventListener('dragleave', () => { uploadZone.classList.remove('dragover'); });
+        uploadZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadZone.classList.remove('dragover');
+            const file = e.dataTransfer.files[0];
+            if (file && file.type.startsWith('image/')) handleFile(file);
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) handleFile(file);
+        });
+
+        function handleFile(file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                imagePreview.src = e.target.result;
+                imagePreview.style.display = 'block';
+                uploadPlaceholder.style.display = 'none';
+                urlInput.value = '';
+                // urlInput.disabled = true; // Let user switch back if they want
+            };
+            reader.readAsDataURL(file);
+        }
+
+        urlInput.addEventListener('input', () => {
+            const val = urlInput.value.trim();
+            if (val !== '') {
+                // Prepend ../ if user enters a local-looking path manually and we're in subfolder
+                // But generally users enter full http URLs here
+                let previewUrl = val;
+                if (!previewUrl.startsWith('http') && !previewUrl.startsWith('data:') && !previewUrl.startsWith('../')) {
+                    previewUrl = '../' + previewUrl;
+                }
+                imagePreview.src = previewUrl;
+                imagePreview.style.display = 'block';
+                uploadPlaceholder.style.display = 'none';
+                fileInput.value = '';
+            }
+        });
+
+        categorySelect.addEventListener('change', () => {
+            if (categorySelect.value === 'custom') {
+                customCategoryGroup.style.display = 'block';
+                document.getElementById('custom-category-input').focus();
+            } else {
+                customCategoryGroup.style.display = 'none';
+            }
+        });
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const getVectorValue = (labelPrefix) => {
+                const labels = document.querySelectorAll('.vector-grid label');
+                for (let lbl of labels) {
+                    if (lbl.textContent.includes(labelPrefix)) return parseFloat(lbl.nextElementSibling.value) || 0;
+                }
+                return 0;
+            };
+
+            const name = document.querySelector('.form-control[placeholder="e.g., Silk Floral Dress"]').value;
+            const brand = document.querySelector('.form-control[placeholder="e.g., StyleFit Premium"]').value;
+            const price = document.querySelector('.form-control[placeholder="e.g., 85,000"]').value;
+            const description = document.getElementById('description-input').value;
+            const category = categorySelect.value === 'custom' ? document.getElementById('custom-category-input').value : categorySelect.value;
+            
+            // Image Logic: 
+            // 1. If imagePreview is base64 (started by file upload), use it.
+            // 2. If urlInput has value, use it.
+            // 3. If editing and neither changed, use original.
+            let image = '';
+            if (imagePreview.src.startsWith('data:')) {
+                image = imagePreview.src;
+            } else if (urlInput.value.trim() !== '') {
+                image = urlInput.value.trim();
+            } else if (isEditMode) {
+                image = editingProduct.image;
+            }
+
+            const colors = Array.from(document.querySelectorAll('.color-checkbox-group input:checked')).map(cb => cb.value);
+            const vectors = [ getVectorValue('Minimalist'), getVectorValue('Streetwear'), getVectorValue('Formal'), getVectorValue('Vintage'), getVectorValue('Traditional') ];
+
+            // Inventory Collection (Complex SKU)
+            const inventory = {};
+            colors.forEach(color => {
+                inventory[color] = {};
+                document.querySelectorAll(`.sku-stock-input[data-color="${color}"]`).forEach(input => {
+                    const qty = parseInt(input.value) || 0;
+                    if (qty > 0) {
+                        inventory[color][input.dataset.size] = qty;
+                    }
+                });
+                // If no stock was entered for this color, maybe initialize with 0 for at least one size or leave empty
+                if (Object.keys(inventory[color]).length === 0) {
+                    // Default to 0 for FREE size if nothing else? Or just keep it.
+                }
+            });
+
+            const productData = {
+                id: isEditMode ? editingProduct.id : Date.now(),
+                name, brand, price,
+                description,
+                priceRaw: parseInt(price.replace(/,/g, '')) || 0,
+                vector: vectors,
+                colors, category,
+                inventory,
+                targetBody: isEditMode ? editingProduct.targetBody : { height: [150, 200], weight: [40, 100] },
+                image: image || 'https://via.placeholder.com/400x500?text=No+Image'
+            };
+
+            let registeredProducts = JSON.parse(localStorage.getItem('registeredProducts') || '[]');
+            
+            if (isEditMode) {
+                const index = registeredProducts.findIndex(p => p.id == editingProduct.id);
+                if (index !== -1) registeredProducts[index] = productData;
+            } else {
+                registeredProducts.push(productData);
+            }
+
+            localStorage.setItem('registeredProducts', JSON.stringify(registeredProducts));
+            alert(isEditMode ? '상품 정보가 수정되었습니다!' : '새로운 상품이 등록되었습니다!');
+            window.location.href = 'product-management.html';
+        });
+    </script>
+</body>
+</html>

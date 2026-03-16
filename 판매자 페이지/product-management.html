@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Management - Style Fit Seller</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .management-container {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .management-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 3rem;
+            border-bottom: 1px solid var(--accent-color);
+            padding-bottom: 2rem;
+        }
+
+        .header-info h1 {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .header-info p {
+            color: var(--text-secondary);
+        }
+
+        .management-controls {
+            background: white;
+            padding: 1.5rem;
+            border-radius: var(--border-radius-md);
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            box-shadow: var(--shadow-premium);
+            border: 1px solid var(--accent-color);
+        }
+
+        .search-wrapper {
+            flex: 1;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            padding-left: 2.8rem;
+            border: 1px solid var(--accent-color);
+            border-radius: 8px;
+            font-family: inherit;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        .filter-select {
+            padding: 0.8rem 1.5rem;
+            border: 1px solid var(--accent-color);
+            border-radius: 8px;
+            background: white;
+            font-family: inherit;
+            cursor: pointer;
+        }
+
+        .product-table-wrapper {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-premium);
+            border: 1px solid var(--accent-color);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        thead {
+            background: #FFFAF3;
+            border-bottom: 1px solid var(--accent-color);
+        }
+
+        th {
+            padding: 1.2rem 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        td {
+            padding: 1.2rem 1.5rem;
+            border-bottom: 1px solid #f8fafc;
+            vertical-align: middle;
+        }
+
+        .product-cell {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .product-thumb {
+            width: 50px;
+            height: 60px;
+            border-radius: 4px;
+            object-fit: cover;
+            background: #f1f5f9;
+        }
+
+        .product-info-mini h4 {
+            margin: 0;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .product-info-mini span {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .category-badge {
+            padding: 0.3rem 0.8rem;
+            background: var(--accent-color);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            text-transform: capitalize;
+        }
+
+        .price-text {
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .action-btns {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-table {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-table.edit {
+            background: var(--accent-color);
+            color: var(--primary-color);
+        }
+
+        .btn-table.delete {
+            background: #fee2e2;
+            color: #ef4444;
+        }
+
+        .btn-table:hover {
+            filter: brightness(0.95);
+            transform: translateY(-1px);
+        }
+
+        .empty-state {
+            padding: 5rem;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        .nav-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header__container">
+            <a href="dashboard.html" class="header__logo">StyleFit Seller</a>
+            <nav class="header__nav">
+                <a href="dashboard.html" class="header__link">Dashboard</a>
+                <a href="product-management.html" class="header__link active">Products</a>
+                <a href="../index.html" class="header__link">View Shop</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="management-container">
+        <a href="dashboard.html" class="nav-back">← Back to Dashboard</a>
+        
+        <div class="management-header">
+            <div class="header-info">
+                <h1>Product Management</h1>
+                <p>총 <span id="product-count">0</span>개의 상품이 등록되어 있습니다.</p>
+            </div>
+            <div style="display: flex; gap: 1rem;">
+                <button id="reset-btn" class="btn-table" style="background: #f8fafc; border: 1px solid var(--accent-color); padding: 0.8rem 1.5rem;">
+                    Reset to Defaults
+                </button>
+                <a href="product-registration.html" class="side-cta-btn" style="width: auto; margin-bottom: 0; padding: 0.8rem 2rem;">
+                    <span class="cta-icon">+</span> Register New
+                </a>
+            </div>
+        </div>
+
+        <div class="management-controls">
+            <div class="search-wrapper">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="search-input" class="search-input" placeholder="상품 이름 또는 브랜드 검색...">
+            </div>
+            <select id="category-filter" class="filter-select">
+                <option value="all">All Categories</option>
+                <option value="top">Top</option>
+                <option value="bottom">Bottom</option>
+                <option value="outer">Outer</option>
+                <option value="dress">Dress</option>
+                <option value="shoe">Shoe</option>
+                <option value="other">Other</option>
+            </select>
+        </div>
+
+        <div class="product-table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                            <th>Name</th>
+                            <th>Brand</th>
+                            <th>Price</th>
+                            <th>Category</th>
+                            <th>Stock</th>
+                            <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="product-table-body">
+                    <!-- Dynamic Rows -->
+                </tbody>
+            </table>
+            <div id="empty-state" class="empty-state" style="display: none;">
+                등록된 상품이 없거나 검색 결과가 없습니다.
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 Style Fit Seller Portal. All rights reserved.</p>
+    </footer>
+
+    <script>
+        let allRegistered = [];
+
+        function seedStyleCards() {
+            const styleOptions = [
+                { id: 1, name: 'Minimalist', vector: [0.9, 0.1, 0.2, 0.1, 0.0], image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=400&q=80' },
+                { id: 2, name: 'Streetwear', vector: [0.2, 0.9, 0.3, 0.2, 0.0], image: 'https://images.unsplash.com/photo-1523398002811-999ca8dec234?auto=format&fit=crop&w=400&q=80' },
+                { id: 3, name: 'Formal', vector: [0.3, 0.1, 0.9, 0.1, 0.1], image: 'images/formal_style.png' },
+                { id: 4, name: 'Vintage', vector: [0.4, 0.3, 0.2, 0.8, 0.2], image: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=400&q=80' },
+                { id: 5, name: 'Bohemian', vector: [0.6, 0.2, 0.1, 0.7, 0.1], image: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=400&q=80' },
+                { id: 6, name: 'Techwear', vector: [0.1, 0.8, 0.5, 0.3, 0.0], image: 'https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&w=400&q=80' },
+                { id: 7, name: 'Traditional 1', vector: [0.1, 0.1, 0.1, 0.1, 0.9], image: 'images/픽사베이 image 11.png' },
+                { id: 8, name: 'Traditional 2', vector: [0.1, 0.1, 0.1, 0.1, 1.0], image: 'images/스크린샷 2026-03-12 오후 3.46.20.png' },
+                { id: 9, name: 'Traditional 3', vector: [0.1, 0.1, 0.1, 0.1, 1.0], image: 'images/스크린샷 2026-03-12 오후 3.47.02.png' }
+            ];
+
+            let registeredProducts = JSON.parse(localStorage.getItem('registeredProducts') || '[]');
+            let addedCount = 0;
+
+            styleOptions.forEach(style => {
+                const exists = registeredProducts.some(p => p.name === style.name && p.brand === 'StyleDemo');
+                if (!exists) {
+                    const newProduct = {
+                        id: Date.now() + Math.random(),
+                        name: style.name,
+                        brand: 'StyleDemo',
+                        price: '99,000',
+                        priceRaw: 99000,
+                        category: 'etc',
+                        image: style.image,
+                        colors: ['white', 'black'],
+                        vector: style.vector,
+                        description: `Default style card for ${style.name} testing.`
+                    };
+                    registeredProducts.push(newProduct);
+                    addedCount++;
+                }
+            });
+
+            if (addedCount > 0) {
+                localStorage.setItem('registeredProducts', JSON.stringify(registeredProducts));
+                return true;
+            }
+            return false;
+        }
+
+        function seedCatalogProducts() {
+            const catalogProducts = [
+                { id: 101, name: 'Essential Oversized Tee', brand: 'StyleFit', price: '29,000', priceRaw: 29000, category: 'top', image: 'shop imags/yuri_b-t-shirt-1261820_1920.png', vector: [0.85, 0.3, 0.1, 0.2, 0.0], colors: ['white', 'grey'], description: '편안한 착용감의 오버사이즈 면 티셔츠입니다. 데일리 룩으로 활용하기 좋습니다.', targetBody: { height: [160, 190], weight: [50, 90] }, inventory: { 'white': { 'S': 5, 'M': 10, 'L': 5 }, 'grey': { 'S': 5, 'M': 15, 'L': 10 } } },
+                { id: 102, name: 'Cargo Tech Pants', brand: 'NeoStreet', price: '89,000', priceRaw: 89000, category: 'bottom', image: 'shop imags/heidijergovsky-jeans-674832_640.jpg', vector: [0.2, 0.95, 0.4, 0.1, 0.0], colors: ['black', 'grey'], description: '테크웨어 스타일의 카고 팬츠입니다. 다양한 포켓으로 수납성과 스타일을 동시에 잡았습니다.', targetBody: { height: [170, 195], weight: [60, 100] }, inventory: { 'black': { 'M': 6, 'L': 10, 'XL': 7 }, 'grey': { 'M': 6, 'L': 10, 'XL': 8 } } },
+                { id: 103, name: 'Wool Tailored Blazer', brand: 'Classy', price: '159,000', priceRaw: 159000, category: 'outer', image: 'shop imags/loft184-fashion-3555645_640.jpg', vector: [0.2, 0.1, 0.9, 0.3, 0.2], colors: ['navy', 'black'], description: '고급 울 소재로 제작된 테일러드 블레이저입니다. 격식 있는 자리에 어울리는 실루엣을 선사합니다.', targetBody: { height: [165, 185], weight: [55, 85] }, inventory: { 'navy': { 'S': 2, 'M': 4, 'L': 3 }, 'black': { 'S': 3, 'M': 4, 'L': 2 } } },
+                { id: 104, name: 'Retro Denim Jacket', brand: 'OldSchool', price: '75,000', priceRaw: 75000, category: 'outer', image: 'https://images.unsplash.com/photo-1551537482-f2075a1d41f2?auto=format&fit=crop&w=300&q=80', vector: [0.5, 0.4, 0.2, 0.85, 0.1], colors: ['blue', 'navy'], description: '빈티지한 워싱이 돋보이는 데님 재킷입니다. 클래식한 무드를 연출하기 좋습니다.', targetBody: { height: [155, 180], weight: [45, 80] }, inventory: { 'blue': { 'M': 5, 'L': 6 }, 'navy': { 'M': 5, 'L': 6, 'XL': 8 } } },
+                { id: 105, name: 'Linen Dress Shirt', brand: 'Minimal', price: '55,000', priceRaw: 55000, category: 'top', image: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?auto=format&fit=crop&w=600&q=80', vector: [0.95, 0.2, 0.4, 0.1, 0.1], colors: ['beige', 'white', 'blue'], description: '통기성이 뛰어난 린넨 소재의 드레스 셔츠입니다. 여름철 시원하고 깔끔한 코디가 가능합니다.', targetBody: { height: [160, 190], weight: [50, 95] }, inventory: { 'beige': { 'M': 10, 'L': 10 }, 'white': { 'M': 10, 'L': 15 }, 'blue': { 'S': 5, 'M': 10 } } },
+                { id: 106, name: 'Classic Knit Sweater', brand: 'CozyWear', price: '65,000', priceRaw: 65000, category: 'top', image: 'shop imags/lovetl-clothes-977417_640.jpg', vector: [0.6, 0.1, 0.4, 0.7, 0.2], colors: ['grey', 'white', 'pink'], description: '부드러운 촉감의 클래식 니트 스웨터입니다. 따스한 색감으로 포근한 인상을 줍니다.', targetBody: { height: [155, 185], weight: [45, 80] }, inventory: { 'grey': { 'M': 10 }, 'white': { 'M': 5, 'FREE': 10 }, 'pink': { 'FREE': 10 } } },
+                { id: 107, name: 'Streetwear Cargo Shorts', brand: 'UrbanStyle', price: '45,000', priceRaw: 45000, category: 'bottom', image: 'shop imags/ornaw-fashion-4132576_640.jpg', vector: [0.1, 0.9, 0.2, 0.3, 0.0], colors: ['khaki', 'brown'], description: '활동적인 스타일의 스트릿 카고 반바지입니다. 여름철 야외 활동에 적합합니다.', targetBody: { height: [160, 190], weight: [50, 95] }, inventory: { 'khaki': { 'M': 15, 'L': 15 }, 'brown': { 'M': 15, 'L': 15, 'XL': 15 } } },
+                { id: 108, name: 'Elegant Midi Dress', brand: 'ChicSilhouette', price: '120,000', priceRaw: 120000, category: 'dress', image: 'shop imags/surprising_media-woman-8636360_640.jpg', vector: [0.8, 0.0, 0.9, 0.2, 0.3], colors: ['black', 'navy'], description: '우아한 라인의 미디 드레스입니다. 파티나 중요한 모임에 추천하는 아이템입니다.', targetBody: { height: [160, 175], weight: [45, 70] }, inventory: { 'black': { 'S': 4, 'M': 6 }, 'navy': { 'S': 4, 'M': 6, 'L': 5 } } },
+                { id: 109, name: 'Vintage Floral Blouse', brand: 'RetroVibe', price: '50,000', priceRaw: 50000, category: 'top', image: 'shop imags/jillwellington-vintage-woman-635255_640.jpg', vector: [0.3, 0.2, 0.1, 0.9, 0.5], colors: ['pattern', 'white', 'pink'], description: '섬세한 플라워 패턴이 돋보이는 빈티지 블라우스입니다. 로맨틱한 분위기를 연출합니다.', targetBody: { height: [150, 170], weight: [40, 65] }, inventory: { 'pattern': { 'S': 5, 'M': 5 }, 'pink': { 'S': 5, 'M': 10 } } },
+                { id: 110, name: 'Cyberpunk Concept Jacket', brand: 'NeoFuture', price: '210,000', priceRaw: 210000, category: 'outer', image: 'shop imags/designfreek-ai-generated-8719968_1920 (1).jpg', vector: [0.0, 0.9, 0.4, 0.1, 0.0], colors: ['black', 'grey'], description: '미래지향적인 디자인의 컨셉 재킷입니다. 유니크한 스타일을 선호하시는 분들께 적합합니다.', targetBody: { height: [165, 190], weight: [55, 90] }, inventory: { 'black': { 'M': 3, 'L': 5 }, 'grey': { 'L': 5, 'XL': 5 } } },
+                { id: 111, name: 'Vintage Tweed Coat', brand: 'Heritage', price: '185,000', priceRaw: 185000, category: 'outer', image: 'shop imags/familieportraet-man-7518890_640.jpg', vector: [0.4, 0.1, 0.8, 0.9, 0.3], colors: ['brown', 'khaki'], description: '클래식한 트위드 소재의 코트입니다. 세월이 흘러도 변하지 않는 가치를 담고 있습니다.', targetBody: { height: [170, 195], weight: [65, 100] }, inventory: { 'brown': { 'M': 4, 'L': 6 }, 'khaki': { 'L': 6, 'XL': 4 } } },
+                { id: 112, name: 'Comfort Cotton Boxers', brand: 'EverydayBasics', price: '15,000', priceRaw: 15000, category: 'bottom', image: 'shop imags/kennethmcandrew-boxer-shorts-335120_640.jpg', vector: [0.9, 0.2, 0.1, 0.1, 0.0], colors: ['white', 'blue'], description: '최고급 면 소재로 제작된 편안한 사각 팬티입니다. 피부 자극 없이 부드럽습니다.', targetBody: { height: [150, 200], weight: [40, 120] }, inventory: { 'white': { 'S': 25, 'M': 50, 'L': 50 }, 'blue': { 'S': 25, 'M': 50, 'L': 50, 'XL': 50 } } },
+                { id: 113, name: 'Royal Velvet Red Dress', brand: 'HistoricalCharm', price: '250,000', priceRaw: 250000, category: 'dress', image: 'https://images.unsplash.com/photo-1547941126-3d5322b218b0?auto=format&fit=crop&w=600&q=80', vector: [0.1, 0.0, 0.6, 0.9, 0.8], colors: ['red', 'black'], description: '화려한 레드 벨벳 소재의 드레스입니다. 특별한 밤, 주인공이 될 수 있는 의상입니다.', targetBody: { height: [155, 180], weight: [45, 75] }, inventory: { 'red': { 'S': 2, 'M': 3 }, 'black': { 'S': 1, 'M': 2, 'L': 2 } } },
+                { id: 114, name: 'Tropical Summer Bikini', brand: 'SunSplash', price: '45,000', priceRaw: 45000, category: 'top', image: 'shop imags/stux-bikini-377487_640.jpg', vector: [0.7, 0.5, 0.1, 0.2, 0.0], colors: ['pattern', 'white', 'blue'], description: '화사한 패턴의 여름 휴가 필수 아이템 비키니입니다. 신축성이 뛰어나고 디자인이 세련되었습니다.', targetBody: { height: [150, 185], weight: [40, 70] }, inventory: { 'pattern': { 'S': 10 }, 'white': { 'S': 5, 'M': 10 }, 'blue': { 'M': 10 } } },
+                { id: 115, name: 'Casual Denim Overall', brand: 'UrbanStyle', price: '78,000', priceRaw: 78000, category: 'bottom', image: 'shop imags/surprising_media-woman-6863307_640.jpg', vector: [0.6, 0.8, 0.1, 0.5, 0.1], colors: ['blue', 'navy'], description: '편안하고 귀여운 무드의 데님 오버롤입니다. 티셔츠 하나와 매치해도 완성도 높은 룩이 됩니다.', targetBody: { height: [160, 185], weight: [50, 85] }, inventory: { 'blue': { 'S': 5, 'M': 10 }, 'navy': { 'S': 5, 'M': 5, 'L': 10 } } },
+                { id: 116, name: 'Breezy Summer Dress', brand: 'FloralBreeze', price: '82,000', priceRaw: 82000, category: 'dress', image: 'shop imags/surprising_media-woman-9503073_640.jpg', vector: [0.8, 0.2, 0.4, 0.6, 0.1], colors: ['pattern', 'blue', 'pink'], description: '가벼운 소재로 제작된 플로럴 롱 드레스입니다. 바람에 흩날리는 실루엣이 매우 아름답습니다.', targetBody: { height: [155, 175], weight: [45, 70] }, inventory: { 'pattern': { 'S': 6, 'M': 10 }, 'blue': { 'M': 5, 'L': 3 }, 'pink': { 'S': 6, 'M': 3, 'L': 3 } } },
+                { id: 117, name: 'Traditional Silk Sari', brand: 'CulturalHeritage', price: '190,000', priceRaw: 190000, category: 'dress', image: 'shop imags/unnatisilks-sari-351106_640.jpg', vector: [0.1, 0.1, 0.6, 0.4, 1.0], colors: ['blue', 'pattern', 'gold'], description: '전통적인 방식으로 직조된 실크 사리입니다. 정교한 자수와 고급스러운 색감이 특징입니다.', targetBody: { height: [150, 180], weight: [45, 80] }, inventory: { 'blue': { 'FREE': 10 }, 'pattern': { 'FREE': 15 } } },
+                { id: 118, name: 'Sunset Orange Knit', brand: 'UrbanStyle', price: '68,000', priceRaw: 68000, category: 'top', image: 'https://images.unsplash.com/photo-1562157873-818bc0726f68?auto=format&fit=crop&w=600&q=80', vector: [0.3, 0.9, 0.2, 0.4, 0.1], colors: ['orange', 'brown'], description: '석양을 닮은 화사한 오렌지 컬러의 니트입니다. 룩에 포인트를 주기 좋습니다.', targetBody: { height: [165, 195], weight: [60, 100] }, inventory: { 'orange': { 'S': 5, 'M': 10, 'L': 10 }, 'brown': { 'S': 5, 'M': 10, 'L': 10, 'XL': 10 } } },
+                { id: 119, name: 'Classic Yellow Raincoat', brand: 'OutdoorElements', price: '95,000', priceRaw: 95000, category: 'outer', image: 'https://images.unsplash.com/photo-1548883354-94bcfe321cbb?auto=format&fit=crop&w=600&q=80', vector: [0.2, 0.5, 0.3, 0.7, 0.2], colors: ['yellow', 'black'], description: '비 오는 날에도 스타일을 유지해주는 클래식 레인코트입니다. 완전 방수 기능으로 실용적입니다.', targetBody: { height: [155, 190], weight: [50, 95] }, inventory: { 'yellow': { 'M': 10, 'L': 10 }, 'black': { 'M': 5, 'L': 5, 'XL': 10 } } },
+                { id: 120, name: 'Deep Forest Chinos', brand: 'Classy', price: '72,000', priceRaw: 72000, category: 'bottom', image: 'https://images.unsplash.com/photo-1554568218-0f1715e72254?auto=format&fit=crop&w=600&q=80', vector: [0.7, 0.3, 0.8, 0.4, 0.2], colors: ['green', 'brown'], description: '차분한 다크 그린 컬러의 치노 팬츠입니다. 슬림한 핏으로 다리가 길어 보입니다.', targetBody: { height: [170, 190], weight: [60, 90] }, inventory: { 'green': { 'S': 10, 'M': 15, 'L': 15 }, 'brown': { 'S': 10, 'M': 15, 'L': 15, 'XL': 10 } } },
+                { id: 121, name: 'Premium Wool Pink Coat', brand: 'ChicSilhouette', price: '248,000', priceRaw: 248000, category: 'outer', image: 'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=600&q=80', vector: [0.3, 0.1, 0.9, 0.5, 0.1], colors: ['pink', 'beige', 'blue'], description: '사랑스러운 핑크 컬러 코트입니다. 최고급 울 함유로 한겨울에도 따뜻하게 착용 가능합니다.', targetBody: { height: [155, 180], weight: [45, 75] }, inventory: { 'pink': { 'S': 3, 'M': 5, 'L': 2 }, 'beige': { 'M': 3, 'L': 2 }, 'blue': { 'S': 2, 'M': 2, 'L': 1 } } }
+            ];
+
+            let registeredProducts = JSON.parse(localStorage.getItem('registeredProducts') || '[]');
+            
+            // Remove previous style cards (with brand 'StyleDemo')
+            registeredProducts = registeredProducts.filter(p => p.brand !== 'StyleDemo');
+            
+            let addedCount = 0;
+            catalogProducts.forEach(prod => {
+                // Exclude shoes and check if already exists by name/brand combo to handle manual deletes
+                const exists = registeredProducts.some(p => p.name === prod.name && p.brand === prod.brand);
+                if (prod.category !== 'shoe' && !exists) {
+                    registeredProducts.push(prod);
+                    addedCount++;
+                }
+            });
+
+            if (addedCount > 0) {
+                localStorage.setItem('registeredProducts', JSON.stringify(registeredProducts));
+                return true;
+            }
+            return false;
+        }
+
+        function loadProducts() {
+            seedCatalogProducts();
+            allRegistered = JSON.parse(localStorage.getItem('registeredProducts') || '[]');
+            renderProducts(allRegistered);
+        }
+
+        function renderProducts(products) {
+            const tbody = document.getElementById('product-table-body');
+            const emptyState = document.getElementById('empty-state');
+            document.getElementById('product-count').textContent = allRegistered.length;
+
+            if (products.length === 0) {
+                tbody.innerHTML = '';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            emptyState.style.display = 'none';
+            tbody.innerHTML = products.map(p => {
+                // Fix relative path for subfolder
+                let imgSrc = p.image;
+                if (imgSrc && !imgSrc.startsWith('http') && !imgSrc.startsWith('data:') && !imgSrc.startsWith('../')) {
+                    imgSrc = '../' + imgSrc;
+                }
+                let totalStock = 0;
+                let stockDetailParts = [];
+
+                if (p.inventory) {
+                    for (const [color, sizes] of Object.entries(p.inventory)) {
+                        for (const [size, qty] of Object.entries(sizes)) {
+                            totalStock += (parseInt(qty) || 0);
+                            stockDetailParts.push(`${color}/${size}:${qty}`);
+                        }
+                    }
+                }
+                const stockDetail = stockDetailParts.length > 0 ? stockDetailParts.join(', ') : 'No data';
+                
+                return `
+                <tr>
+                    <td>
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <img src="${imgSrc}" alt="${p.name}" style="width: 40px; height: 50px; object-fit: cover; border-radius: 4px;" onerror="this.src='../images/placeholder.png';">
+                            ${p.name}
+                        </div>
+                    </td>
+                    <td>${p.brand}</td>
+                    <td><span class="price-text">₩${p.price}</span></td>
+                    <td><span class="category-badge">${p.category}</span></td>
+                    <td>
+                        <div title="${stockDetail}" style="cursor: help;">
+                            <strong>${totalStock}</strong>
+                            <small style="display: block; color: #666; font-size: 0.75rem;">${stockDetail.length > 15 ? stockDetail.substring(0, 15) + '...' : stockDetail}</small>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="action-btns">
+                            <button onclick="editProduct(${p.id})" class="btn-table edit">Edit</button>
+                            <button onclick="deleteProduct(${p.id})" class="btn-table delete">Delete</button>
+                        </div>
+                    </td>
+                </tr>
+            `}).join('');
+        }
+
+        function editProduct(id) {
+            window.location.href = `product-registration.html?edit=${id}`;
+        }
+
+        function deleteProduct(id) {
+            if (confirm('정말 이 상품을 삭제하시겠습니까?')) {
+                allRegistered = allRegistered.filter(p => p.id !== id);
+                localStorage.setItem('registeredProducts', JSON.stringify(allRegistered));
+                applyFilters();
+            }
+        }
+
+        function applyFilters() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const category = document.getElementById('category-filter').value;
+
+            const filtered = allRegistered.filter(p => {
+                const matchesSearch = p.name.toLowerCase().includes(searchTerm) || p.brand.toLowerCase().includes(searchTerm);
+                const matchesCategory = category === 'all' || p.category === category;
+                return matchesSearch && matchesCategory;
+            });
+
+            renderProducts(filtered);
+        }
+
+        document.getElementById('search-input').addEventListener('input', applyFilters);
+        document.getElementById('category-filter').addEventListener('change', applyFilters);
+        
+        document.getElementById('reset-btn').addEventListener('click', () => {
+            if (confirm('모든 상품 데이터를 초기 기본값으로 되돌리시겠습니까? 직접 등록하거나 수정한 모든 정보가 사라집니다.')) {
+                localStorage.removeItem('registeredProducts');
+                location.reload();
+            }
+        });
+
+        // Initial Load
+        document.addEventListener('DOMContentLoaded', loadProducts);
+    </script>
+</body>
+</html>

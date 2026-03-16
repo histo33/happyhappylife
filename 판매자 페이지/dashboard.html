@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Style Fit Seller - Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        .dashboard-content {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .welcome-card {
+            background: white;
+            padding: 4rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        .stat-item {
+            padding: 2rem;
+            background: #f8fafc;
+            border-radius: 12px;
+        }
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header__container">
+            <h1 class="header__logo">Style Fit <span>Seller</span></h1>
+            <nav class="header__nav">
+                <a href="../index.html" class="header__link">Logout</a>
+                <a href="../index.html#test" class="header__link">Style Test</a>
+                <a href="../index.html#recommendations" class="header__link">Recommendations</a>
+                <a href="../index.html#explorer" class="header__link">Explorer</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="dashboard-content">
+        <div class="dashboard-grid">
+            <!-- Left Side: Statistics -->
+            <div class="dashboard-main">
+                <div class="welcome-card">
+                    <h1 class="login-card__title">Statistics</h1>
+                    <p class="login-card__subtitle">오늘의 판매 현황 및 지표입니다.</p>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value">₩2,450,000</div>
+                            <div class="stat-label">오늘의 매출</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">128</div>
+                            <div class="stat-label">신규 주문</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">4.8</div>
+                            <div class="stat-label">고객 평점</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">15</div>
+                            <div class="stat-label">품절 임박</div>
+                    </div>
+            </div>
+
+            <!-- Right Side: Management Board -->
+            <aside class="dashboard-side">
+                <div class="management-board">
+                    <h2 class="management-title">Quick Actions</h2>
+                    <p class="management-desc">새로운 상품을 등록하거나 기존 재고를 관리하세요.</p>
+                    
+                    <a href="product-registration.html" class="side-cta-btn">
+                        <span class="cta-icon">➕</span>
+                        Register Product
+                    </a>
+
+                    <div class="management-links">
+                        <a href="product-management.html" class="mgmt-link">📦 Manage All Products</a>
+                        <a href="#" class="mgmt-link">📈 Sales Analytics</a>
+                        <a href="#" class="mgmt-link">📋 Order Tracking</a>
+                        <a href="#" class="mgmt-link">💬 Customer Service</a>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2026 Style Fit Seller Portal. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Dashboard Stats Counter Example (Dynamic data could go here)
+        document.addEventListener('DOMContentLoaded', () => {
+            const registeredProducts = JSON.parse(localStorage.getItem('registeredProducts') || '[]');
+            // In a real app, you'd calculate stats from real sales data
+            console.log('Registered items count:', registeredProducts.length);
+        });
+    </script>
+</body>
+</html>
